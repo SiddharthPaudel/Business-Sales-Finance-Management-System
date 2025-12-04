@@ -1,97 +1,82 @@
 "use client";
 
-import { motion , useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+
 export default function Hero() {
-
-    const bgControls=useAnimation();
-
-    useEffect(()=>{
-        // initial entrance
-        bgControls.start({
-            scale:1,
-            x:0,
-            opacity:1,
-            transition:{duration:0.8}
-        }).then(()=>{
-            //Continuos slow motion after entracne
-            bgControls.start({
-                scale:[1,1.05,1],
-                x:[0,20,0],
-                transition:{duration:15,repeat:Infinity}
-            });
-        })
-    },[bgControls]);
   return (
-    <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Animated Background Image */}
-      <motion.div
-  className="absolute inset-0 bg-cover bg-center z-0"
-  style={{ backgroundImage: "url('/images/bot.jpg')" }}
-  initial={{ scale: 1.05, x: 0, opacity: 0 }} // start hidden + scaled
-  animate={bgControls}  // match text entrance
-             // same duration as text
-/>
+    <section className="relative w-full bg-[#f8f8f8] py-32 flex flex-col items-center text-center px-6 overflow-hidden">
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-dark/5"></div> {/* Milky white overlay */}
+      {/* Floating Circular Images */}
+      {/* Left Top */}
+      <motion.div
+        initial={{ opacity: 0, y: -50, x: -50 }}
+        animate={{ opacity: 0.3, y: 0, x: 0 }}
+        transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
+        className="absolute top-20 left-10 w-24 h-24 rounded-full overflow-hidden shadow-lg"
+      >
+        <Image src="/images/pic1.png" alt="Floating" fill className="object-cover" />
+      </motion.div>
+
+      {/* Left Bottom */}
+      <motion.div
+        initial={{ opacity: 0, y: 50, x: -50 }}
+        animate={{ opacity: 0.3, y: 0, x: 0 }}
+        transition={{ duration: 2.5, repeat: Infinity, repeatType: "mirror" }}
+        className="absolute bottom-24 left-20 w-28 h-28 rounded-full overflow-hidden shadow-lg"
+      >
+        <Image src="/images/pic2.png" alt="Floating" fill className="object-cover" />
+      </motion.div>
+
+      {/* Right Top */}
+      <motion.div
+        initial={{ opacity: 0, y: -50, x: 50 }}
+        animate={{ opacity: 0.3, y: 0, x: 0 }}
+        transition={{ duration: 2.2, repeat: Infinity, repeatType: "mirror" }}
+        className="absolute top-24 right-10 w-24 h-24 rounded-full overflow-hidden shadow-lg"
+      >
+        <Image src="/images/pic3.png" alt="Floating" fill className="object-cover" />
+      </motion.div>
+
+      {/* Right Bottom */}
+      <motion.div
+        initial={{ opacity: 0, y: 50, x: 50 }}
+        animate={{ opacity: 5, y: 0, x: 0 }}
+        transition={{ duration: 2.8, repeat: Infinity, repeatType: "mirror" }}
+        className="absolute bottom-20 right-20 w-28 h-28 rounded-full overflow-hidden shadow-lg"
+      >
+        <Image src="/images/pic4.png" alt="Floating" fill className="object-cover" />
+      </motion.div>
 
       {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex flex-col items-center gap-8">
-        {/* Headline */}
-        <motion.h1
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-6xl font-extrabold text-gray-800 leading-tight"
-        >
-          Learn <span className="text-blue-600">Smarter</span> &{" "}
-          <span className="text-purple-600">Faster</span>
-        </motion.h1>
+      <motion.h1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-4xl md:text-6xl font-bold text-gray-900 z-10"
+      >
+        Manage Your Business Sales  
+        <span className="block text-blue-600 mt-2">Smarter & Faster</span>
+      </motion.h1>
 
-        {/* Subtext */}
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="max-w-2xl text-gray-600 text-lg md:text-xl"
-        >
-          Adaptive AI-powered learning platform that tracks your progress, recommends topics, and makes studying fun.
-        </motion.p>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.8 }}
+        className="mt-6 max-w-2xl text-lg md:text-xl text-gray-600 z-10"
+      >
+        A simple, powerful, and intuitive sales management system designed
+        for non-technical business owners.
+      </motion.p>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex gap-4 flex-wrap justify-center"
-        >
-          <button className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
-            Get Started
-          </button>
-          <button className="border border-gray-400 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition">
-            Explore Modules
-          </button>
-        </motion.div>
-
-        {/* Floating Stats Cards */}
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl">
-          {[
-            { value: "1200+", label: "Topics Covered", color: "blue-600" },
-            { value: "95%", label: "Avg Accuracy", color: "purple-600" },
-            { value: "7 Days", label: "Learning Streak", color: "green-600" },
-          ].map((item) => (
-            <motion.div
-              key={item.label}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white/90 rounded-2xl shadow-lg p-6 text-center"
-            >
-              <h2 className={`text-2xl font-bold text-${item.color}`}>{item.value}</h2>
-              <p className="text-gray-700 mt-2">{item.label}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
+        className="mt-10 px-8 py-3 bg-blue-600 text-white rounded-xl text-lg font-medium shadow hover:bg-blue-700 transition z-10"
+      >
+        Get Started
+      </motion.button>
     </section>
   );
 }
