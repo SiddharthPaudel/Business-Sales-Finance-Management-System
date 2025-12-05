@@ -1,48 +1,70 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
+import Image from "next/image";
 import SectionTitle from "./SectionTitle";
 
 const items = [
   {
-    title: "Organized Sales Management",
-    desc: "Record every sale with customer, price, and product details.",
+    title: "Organized Sales",
+    desc: "Record every sale instantly.",
+    img: "/images/solution.png",
   },
   {
-    title: "Automatic Profit Calculation",
-    desc: "No more manual calculations — profit updates instantly.",
+    title: "Auto Profit",
+    desc: "Profit updates live automatically.",
+    img: "/images/pic2.png",
   },
   {
-    title: "Customer History Tracking",
-    desc: "View every customer's purchase history and lifetime value.",
+    title: "Customer History",
+    desc: "View purchase history anytime.",
+    img: "/images/pic4.png",
   },
   {
-    title: "Live Inventory Updates",
-    desc: "Stock reduces automatically after every sale.",
+    title: "Live Inventory",
+    desc: "Stock updates automatically.",
+    img: "/images/pic3.png",
   },
 ];
 
 export default function Solutions() {
   return (
-    <section className="w-full py-20 px-6 bg-[#fafafa]">
+    <section className="w-full py-12 px-4 bg-white">
       <SectionTitle
-        title="How This System Solves Business Problems"
-        subtitle="Traditional notebooks and Excel sheets create mistakes. Our system fixes them with automation."
+        title="How This System Helps"
+        subtitle="Automate your business workflow easily."
       />
 
-      <div className="grid gap-10 md:grid-cols-2 max-w-6xl mx-auto mt-12">
-        {items.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="p-8 bg-white rounded-2xl shadow-md border border-gray-100"
-          >
-            <h3 className="text-xl font-semibold text-gray-900">{item.title}</h3>
-            <p className="mt-3 text-gray-600">{item.desc}</p>
-          </motion.div>
-        ))}
+      <div className="max-w-3xl mx-auto mt-8">
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={20}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000 }}
+          className="pb-8"
+        >
+          {items.map((item, i) => (
+            <SwiperSlide key={i}>
+              <div className="bg-white p-6 rounded-xl text-center border border-gray-100">
+                <div className="w-40 h-40 mx-auto mb-4 relative">
+                  <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    className="object-contain rounded-lg"
+                  />
+                </div>
+                <h3 className="text-xl font-medium text-gray-900">{item.title}</h3>
+                <p className="mt-2 text-gray-500 text-sm">{item.desc}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );
