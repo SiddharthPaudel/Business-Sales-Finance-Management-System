@@ -1,49 +1,56 @@
 "use client";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+     // optional but useful
+});
 
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative w-full bg-[#f8f8f8] py-32 flex flex-col items-center text-center px-6 overflow-hidden">
+    <section className={`relative w-full bg-white py-32 flex flex-col items-center text-center px-6 overflow-hidden ${inter.className}`}>
 
       {/* Floating Circular Images */}
       {/* Left Top */}
       <motion.div
-        initial={{ opacity: 0, y: -50, x: -50 }}
-        animate={{ opacity: 0.3, y: 0, x: 0 }}
-        transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute top-20 left-10 w-24 h-24 rounded-full overflow-hidden shadow-lg"
+        initial={{ opacity: 2 }}
+        animate={{ opacity: 2, x: [-10, 10, -10], y: [-10, 10, -10] }}
+        transition={{ duration: 4, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        className="absolute top-20 left-10 w-35 h-35 rounded-full overflow-hidden shadow-lg border-blue-500-5 border-4 border-blue-600"
       >
         <Image src="/images/pic1.png" alt="Floating" fill className="object-cover" />
       </motion.div>
 
       {/* Left Bottom */}
       <motion.div
-        initial={{ opacity: 0, y: 50, x: -50 }}
-        animate={{ opacity: 0.3, y: 0, x: 0 }}
-        transition={{ duration: 2.5, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute bottom-24 left-20 w-28 h-28 rounded-full overflow-hidden shadow-lg"
+        initial={{ opacity: 2 }}
+        animate={{ opacity: 2, x: [-10, 10, -10], y: [-10, 10, -10] }}
+        transition={{ duration: 4.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        className="absolute bottom-24 left-20 w-35 h-35 rounded-full overflow-hidden shadow-lg border-4 border-blue-600"
       >
         <Image src="/images/pic2.png" alt="Floating" fill className="object-cover" />
       </motion.div>
 
       {/* Right Top */}
       <motion.div
-        initial={{ opacity: 0, y: -50, x: 50 }}
-        animate={{ opacity: 0.3, y: 0, x: 0 }}
-        transition={{ duration: 2.2, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute top-24 right-10 w-24 h-24 rounded-full overflow-hidden shadow-lg"
+        initial={{ opacity: 2 }}
+        animate={{ opacity: 2, x: [-10, 10, -10], y: [-10, 10, -10] }}
+        transition={{ duration: 4.2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        className="absolute top-24 right-10 w-35 h-35 rounded-full overflow-hidden shadow-lg border-4 border-blue-600"
       >
         <Image src="/images/pic3.png" alt="Floating" fill className="object-cover" />
       </motion.div>
 
       {/* Right Bottom */}
       <motion.div
-        initial={{ opacity: 0, y: 50, x: 50 }}
-        animate={{ opacity: 5, y: 0, x: 0 }}
-        transition={{ duration: 2.8, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute bottom-20 right-20 w-28 h-28 rounded-full overflow-hidden shadow-lg"
+        initial={{ opacity: 2 }}
+        animate={{ opacity: 2, x: [-10, 10, -10], y: [-10, 10, -10] }}
+        transition={{ duration: 4.8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        className="absolute bottom-20 right-20 w-35 h-35 rounded-full overflow-hidden shadow-lg border-4 border-blue-600"
       >
         <Image src="/images/pic4.png" alt="Floating" fill className="object-cover" />
       </motion.div>
@@ -53,7 +60,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-4xl md:text-6xl font-bold text-gray-900 z-10"
+        className="text-4xl md:text-6xl font-bold text-gray-900 z-10  "
       >
         Manage Your Business Sales  
         <span className="block text-blue-600 mt-2">Smarter & Faster</span>
