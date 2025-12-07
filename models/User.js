@@ -1,12 +1,29 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, minlength: 2 },
-    email: { type: String, required: true, unique: true, lowercase: true },
-    password: { type: String, required: true, minlength: 6 }
+    name: { type: String, required: true },
+
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
+    password: {
+      type: String,
+      required: function () {
+        return this.authType !== "google";  // password required only for credentials
+      },
+    },
+
+    authType: {
+      type: String,
+      enum: ["credentials", "google"],
+      default: "credentials",
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.models.User || mongoose.model("User", userSchema);
+export default mongoose.models.User || mongoose.model("User", UserSchema);

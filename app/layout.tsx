@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Inter } from "next/font/google";
+import Header from "./components/Header";
+// import Footer from "./components/Footer";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,12 +31,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+          <body className={inter.className}>
+            {/* Header visible on every page */}
+            <Header/>
+    
+            {/* Page content */}
+            <main className="min-h-screen">
+              {children}
+            </main>
+    
+            {/* Footer visible on every page */}
+            {/* <Footer /> */}
+          </body>
+        </html>
   );
 }
