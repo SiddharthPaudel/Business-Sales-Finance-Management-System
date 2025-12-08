@@ -1,10 +1,36 @@
+// app/api/auth/[...nextauth]/route.js
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { connectDB } from "@/lib/db";
 import User from "@/models/User";
+import bcrypt from "bcryptjs";
 
 const handler = NextAuth({
   providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        await connectDB();
+
+        const user = await User.findOne({ email: credentials.email });
+        if (!user) throw new Error("No user found");
+
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) throw new Error("Invalid password");
+
+        return {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          image: user.image || null,
+        };
+      },
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -12,30 +38,24 @@ const handler = NextAuth({
   ],
 
   callbacks: {
-    async signIn({ user }) {
-      await connectDB();
-
-      // Check if user exists
-      let existingUser = await User.findOne({ email: user.email });
-
-      if (!existingUser) {
-        await User.create({
-          name: user.name,
-          email: user.email,
-          password: null,          // no password needed
-          authType: "google",      // MUST match model field
-        });
+    async jwt({ token, user }) {
+      // On first login, attach user info to token
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.image = user.image;
       }
-
-      return true;
-    },
-
-    async session({ session }) {
-      return session;
-    },
-
-    async jwt({ token }) {
       return token;
+    },
+
+    async session({ session, token }) {
+      // Include token info in session.user
+      session.user.id = token.id;
+      session.user.name = token.name;
+      session.user.email = token.email;
+      session.user.image = token.image;
+      return session;
     },
   },
 

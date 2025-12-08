@@ -23,11 +23,18 @@ export default function LoginPage() {
     setSuccess("");
 
     try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await signIn("credentials", {
+  redirect: false,
+  email: formData.email,
+  password: formData.password,
+});
+
+if (res.error) {
+  setError(res.error);
+} else {
+  setSuccess("Login successful");
+  setTimeout(() => router.push("/dashboard"), 500);
+}
 
       const data = await res.json();
 
