@@ -69,7 +69,7 @@ export default function LoginPage() {
           onClick={handleGoogleLogin}
           className="w-full flex items-center justify-center gap-2 border py-2 rounded-lg shadow-sm hover:bg-gray-50 transition mb-4"
         >
-          <Image src="/google.png" width={20} height={20} alt="Google" />
+          <Image src="/images/icong.png" width={20} height={20} alt="Google" />
           Continue with Google
         </button>
 

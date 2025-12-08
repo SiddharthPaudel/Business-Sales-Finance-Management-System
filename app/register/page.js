@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";   // 🔥 Add this
-
+import Image from "next/image";
 export default function SignupPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
@@ -40,7 +40,7 @@ export default function SignupPage() {
       setLoading(false);
 
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push("/login");
       }, 2000);
     } catch (err) {
       setError("Something went wrong. Please try again.");
@@ -124,9 +124,10 @@ export default function SignupPage() {
         {/* 🔥 GOOGLE SIGNUP BUTTON */}
         <button
           onClick={() => signIn("google")}
-          className="w-full bg-red-500 text-white py-2 rounded-lg font-medium hover:bg-red-600 transition"
+          className="w-full flex items-center justify-center gap-2 border py-2 rounded-lg shadow-sm hover:bg-gray-50 transition"
         >
-          Continue with Google
+          <Image src="/images/icong.png" width={20} height={20} alt="Google" />
+            Continue with Google
         </button>
 
         <p className="mt-4 text-sm text-center text-gray-600">
