@@ -1,18 +1,18 @@
 "use client";
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-     // optional but useful
-});
+// const inter = Inter({
+//   subsets: ["latin"],
+//   weight: ["400", "700"],
+//      // optional but useful
+// });
 
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className={`relative w-full bg-white py-32 flex flex-col items-center text-center px-6 overflow-hidden ${inter.className}`}>
+    <section className={`relative w-full bg-white py-32 flex flex-col items-center text-center px-6 overflow-hidden `}>
 
       {/* Floating Circular Images */}
       {/* Left Top */}

@@ -12,7 +12,7 @@ import SectionTitle from "./SectionTitle";
 
 export default function MainGoal() {
   return (
-    <section className={`w-full py-20 px-6 bg-white ${inter.className}`}>
+    <section className={`w-full py-20 px-6 bg-white `}>
       <SectionTitle
         title="Our Main Goal"
         subtitle="A powerful, easy-to-use platform designed for small businesses to manage all sales, customers, and finances in one place—without any technical knowledge."

@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { connectDB } from "@/lib/db";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
+import icon from "../../../../public/images/user.png"
 
 const handler = NextAuth({
   providers: [
@@ -27,8 +28,8 @@ const handler = NextAuth({
           id: user._id.toString(),
           name: user.name,
           email: user.email,
-          image: user.image || null,
-        };
+          image: user.image || {icon},
+        }
       },
     }),
     GoogleProvider({
