@@ -16,46 +16,28 @@ export default function LoginPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-    setSuccess("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError("");
+  setSuccess("");
 
-    try {
-      const res = await signIn("credentials", {
-  redirect: false,
-  email: formData.email,
-  password: formData.password,
-});
+  const res = await signIn("credentials", {
+    redirect: false,
+    email: formData.email,
+    password: formData.password,
+  });
 
-if (res.error) {
-  setError(res.error);
-} else {
-  setSuccess("Login successful");
-  setTimeout(() => router.push("/dashboard"), 500);
-}
+  if (res.error) {
+    setError(res.error);
+  } else {
+    setSuccess("Login successful");
+    setTimeout(() => router.push("/dashboard"), 500);
+  }
 
-      const data = await res.json();
+  setLoading(false);
+};
 
-      if (!res.ok) {
-        setError(data.message || "Login failed");
-        setLoading(false);
-        return;
-      }
-
-      setSuccess(data.message || "Login successful");
-      setLoading(false);
-
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1500);
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong. Please try again.");
-      setLoading(false);
-    }
-  };
 
   // ⭐ GOOGLE LOGIN FUNCTION
   const handleGoogleLogin = async () => {
