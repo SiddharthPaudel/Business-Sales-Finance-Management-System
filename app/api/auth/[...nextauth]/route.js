@@ -6,8 +6,9 @@ import clientPromise from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
-const handler = NextAuth({
-  adapter: MongoDBAdapter(clientPromise), // ✅ Add this
+export const authOptions = {
+  adapter: MongoDBAdapter(clientPromise),
+
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -30,11 +31,13 @@ const handler = NextAuth({
         };
       },
     }),
+
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
     }),
   ],
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -53,10 +56,14 @@ const handler = NextAuth({
       return session;
     },
   },
+
   session: {
     strategy: "jwt",
   },
+
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

@@ -18,7 +18,9 @@ export default function ProductsPage() {
 
   // Fetch products
   async function loadProducts() {
-    const res = await fetch("/api/products");
+    const res = await fetch("/api/products",{
+      credentials:"include",
+    });
     const data = await res.json();
     setProducts(data);
   }
@@ -39,7 +41,7 @@ export default function ProductsPage() {
       if (form[key]) fd.append(key, form[key]);
     });
 
-    const res = await fetch("/api/products", { method: "POST", body: fd });
+    const res = await fetch("/api/products", { method: "POST", body: fd,credentials:"include" });
     if (res.ok) {
       setForm({ name: "", description: "", price: "", stock: "", image: null });
       setMessage("Product added successfully!");
@@ -72,6 +74,7 @@ export default function ProductsPage() {
     const res = await fetch(`/api/products/${editProductId}`, {
       method: "PUT",
       body: fd,
+      credentials:"include"
     });
 
     if (res.ok) {
@@ -85,7 +88,7 @@ export default function ProductsPage() {
   async function handleDelete(id) {
     if (!confirm("Are you sure you want to delete this product?")) return;
 
-    const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+    const res = await fetch(`/api/products/${id}`, { method: "DELETE" ,credentials:"include"});
     if (res.ok) {
       setMessage("Product deleted successfully!");
       loadProducts();
