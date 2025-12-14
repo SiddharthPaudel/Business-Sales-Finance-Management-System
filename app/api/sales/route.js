@@ -3,16 +3,46 @@ import { connectDB } from "@/lib/db";
 import Sale from "@/models/Sale";
 import Product from "@/models/Product";
 
-export async function GET(req) {
+// export async function GET(req) {
+//   try {
+//     await connectDB();
+//     const sales = await Sale.find({})
+//       .populate("productId", "name price") // populate only name and price
+//       .sort({ createdAt: -1 });
+
+//     return NextResponse.json({ sales });
+//   } catch (error) {
+//     console.log("Get Sales Error:", error);
+//     return NextResponse.json({ message: "Server error" }, { status: 500 });
+//   }
+// }
+
+export async function GET() {
   try {
     await connectDB();
-    const sales = await Sale.find({}).sort({ createdAt: -1 });
-    return NextResponse.json({ sales });
-  } catch (error) {
-    console.log("Get Sales Error:", error);
+
+    const sales = await Sale.find();
+
+    // Find orphan sales
+    const orphanSales = [];
+    for (const sale of sales) {
+      const productExists = await Product.exists({ _id: sale.productId });
+      if (!productExists) orphanSales.push(sale._id);
+    }
+
+    // Delete orphan sales
+    if (orphanSales.length > 0) {
+      await Sale.deleteMany({ _id: { $in: orphanSales } });
+    }
+
+    const cleanedSales = await Sale.find().populate("productId");
+
+    return NextResponse.json({ sales: cleanedSales });
+  } catch (err) {
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }
+
 
 export async function POST(req) {
   try {

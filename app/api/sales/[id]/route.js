@@ -18,7 +18,7 @@ export async function PUT(req, context) {
   try {
     await connectDB();
     const { id } = await context.params;
-    const { quantity } = await req.json();
+    const { quantity,customer } = await req.json();
 
     const sale = await Sale.findById(id);
     if (!sale) {
@@ -39,6 +39,7 @@ export async function PUT(req, context) {
     await product.save();
 
     sale.quantity = quantity;
+    sale.customer = customer;
     sale.totalAmount = quantity * product.price;
     await sale.save();
 

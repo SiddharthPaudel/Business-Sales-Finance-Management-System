@@ -97,7 +97,7 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-10 pt-24">
+    <div className="min-h-screen  px-4 py-10 pt-10">
       {message && (
         <div className="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow z-50">
           {message}

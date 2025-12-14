@@ -34,7 +34,7 @@ export default async function RootLayout({ children }) {
       <body  className={geistSans.className}>
         <Providers>
         <Header />
-        <main className="min-h-screen">{children}</main>
+        <main className="pt-20 min-h-screen bg-gray-50  ">{children}</main>
         </Providers>
       </body>
     </html>
